@@ -1,6 +1,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { resolve, dirname } from "node:path";
 import { siteOrigin } from "./site-origin.mjs";
+import { faqText } from "./seo-faq.mjs";
 
 const domain = siteOrigin();
 const locales = {
@@ -96,6 +97,10 @@ function page(lang) {
       <p>${e(t.detail)}</p>
       <p class="seo-help-note">${e(t.note)}</p>
       <p><a href="${dir}sample-form.pdf" download="FillThisPDF-Sample-Form.pdf">${lang === "nl" ? "Download een voorbeeld-PDF" : lang === "fr" ? "T&eacute;l&eacute;charger un PDF d'exemple" : "Download a free sample PDF to try"}</a></p>
+      <section class="pdf-faq" aria-label="${e(faqText[lang].heading)}">
+        <h3>${e(faqText[lang].heading)}</h3>
+        ${faqText[lang].items.map(([q,a]) => `<details><summary>${e(q)}</summary><p>${e(a)}</p></details>`).join("\n")}
+      </section>
       <nav aria-label="Languages">
         ${allLangs.map((key,i)=>`<a hreflang="${key}" lang="${key}" href="${href(key)}"${key===lang?' aria-current="page"':''}>${e(t.links[i])}</a>`).join(" · ")}
       </nav>
