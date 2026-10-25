@@ -17,11 +17,18 @@ jobs:
       - run: npm run lint
       - run: npm run typecheck
       - run: npm test
+      - run: npm run worker:check
+        env:
+          WRANGLER_SEND_METRICS: "false"
+      - run: npm audit
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
+      - run: npm run test:e2e:ai
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: browser-test-results
-          path: test-results/
+          path: |
+            test-results/
+            test-results-ai/
           retention-days: 7

@@ -9,6 +9,7 @@ export default ts.config(
       "node_modules/**",
       "playwright-report/**",
       "test-results/**",
+      "test-results-ai/**",
       "public/pdfjs/**",
       ".tmp/**",
     ],

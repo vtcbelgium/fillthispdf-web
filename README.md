@@ -21,7 +21,7 @@ No environment variables, provider keys, account, database or backend are requir
 - Standard AcroForm text, multiline, checkbox, radio and choice fields, including read-only protection. Edit on the page or in the accessible form panel.
 - PDF-lib export retains original pages and vector content. Additions use PDF.js inverse viewport coordinates, including crop offsets, 0/90/180/270-degree page rotations and non-default PDF user units. Fonts are embedded for portable output.
 - English, Dutch and French UI, metadata, privacy disclosures and FAQ. Responsive mobile controls and touch placement.
-- An explicit, disabled **AI not configured** state. There is no inference adapter, consent flow or remote request because no provider is connected. A future AI integration must implement server-side credentials, explicit consent, minimum data sharing and review before applying suggestions.
+- Optional genuine Cloudflare Workers AI matching for existing form fields, with exact payload preview, fresh consent per request and individual review before applying. Only selected labels and entered instructions leave the device; PDF files and current values do not. Disabled **AI not configured** state when `VITE_AI_ENDPOINT` is unset. See [Worker setup, privacy and current authentication blocker](workers/fillthispdf-ai/README.md). No live service is configured by this change.
 
 ## Verification
 
@@ -31,13 +31,15 @@ npm run typecheck
 npm test
 npx playwright install chromium
 npm run test:e2e
+npm run test:e2e:ai
+npm run worker:check
 npm run build
 npm audit
 ```
 
 `test:e2e` builds and tests the **production bundle** on port 4173. It starts and stops its own Vite preview server. Playwright uses Chromium desktop and an iPhone 13 viewport with touch emulation. It is not a physical-device or Safari certification.
 
-The 11 PDF tests cover validation, malformed/password-protected/blank documents, page limits, form roundtrips, preservation of original text, all four page rotations, crop offsets, user units and unsupported characters. The 10 browser tests cover flat PDFs, two-page documents, fields, zoom, pointer/keyboard repositioning, touch placement, date editing, typed signatures, deletion, undo/redo, error recovery, translations and disabled AI. A download is produced with the network disabled and reopened; requests are checked for unexpected methods and external origins. Exported text coordinates are independently read back and compared with the displayed baseline after zoom/repositioning.
+PDF tests cover validation, malformed/password-protected/blank documents, page limits, form roundtrips, preservation of original text, all four page rotations, crop offsets, user units and unsupported characters. Browser tests cover flat PDFs, two-page documents, fields, zoom, pointer/keyboard repositioning, touch placement, date editing, typed signatures, deletion, undo/redo, error recovery, translations and disabled AI. A download is produced with the network disabled and reopened; requests are checked for unexpected methods and external origins. Exported text coordinates are independently read back and compared with the displayed baseline after zoom/repositioning. Added Worker/client tests cover bounds, CORS, rate-limit failure, timeout, quota errors, strict schemas and minimized requests. The separate AI browser suite exercises consent/review, removal and renaming of selected labels, error recovery, stale-response isolation, translations and offline export on desktop/mobile at the GitHub Pages base path. All AI tests use mocks; no live inference is claimed.
 
 Synthetic fixtures only; see [tests/fixtures/README.md](tests/fixtures/README.md). Browser screenshots and failure traces are written to ignored `test-results/`. GitHub Actions runs the checks on PRs and uploads test artifacts.
 
@@ -77,3 +79,17 @@ After merging this PR:
 Future pushes to `main` publish automatically; PRs use the existing Verify workflow and cannot deploy. GitHub Pages controls response caching. This change does not enable Pages, deploy, configure a custom domain, change DNS or Vercel settings, or change app features. The future `fillthispdf.othrys.be` root uses the same relative build, but domain setup remains a separate task.
 
 References: [GitHub Pages custom workflows](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages) and [Vite relative base](https://vite.dev/guide/build.html#relative-base).
+
+## Replaceable AI implementation (v0.2 work in review)
+
+The optional AI engine has a **backend-neutral** `/match` API, with
+Cloudflare Workers AI as default and a separately configured
+OpenAI-compatible provider adapter. The browser sends only user-approved
+field labels and typed instructions, never the PDF or existing field values.
+The chosen provider is disclosed before each fresh consent and the Worker
+checks its identifier; it will reject changes not reflected in the website
+configuration. No hidden provider switching, paid fallbacks, or retry loops.
+See [provider deployment and privacy configuration](workers/fillthispdf-ai/README.md).
+
+AI remains disabled on the live site unless an authenticated, review-tested
+Worker URL is configured and a new website build is deliberately deployed.

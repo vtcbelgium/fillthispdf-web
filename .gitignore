@@ -3,7 +3,10 @@ dist/
 .env*
 !.env.example
 test-results/
+test-results-ai/
 playwright-report/
 *.tsbuildinfo
 .tmp/
 public/pdfjs/
+.wrangler/
+.dev.vars*
