@@ -187,7 +187,7 @@ main {
   place-items: center;
   position: relative;
   transform: rotate(-6deg);
-  color: #608276;
+  color: #496659;
   font-size: 12px;
   letter-spacing: 1px;
 }
@@ -306,7 +306,7 @@ footer {
   display: flex;
   align-items: start;
   gap: 30px;
-  color: #728179;
+  color: #52645c;
   font-size: 11px;
 }
 footer strong {
@@ -834,3 +834,13 @@ aside p {
 .pdf-faq summary { cursor: pointer; font-weight: 600; }
 .pdf-faq summary:focus-visible { outline: 2px solid #11695e; outline-offset: 4px; }
 .pdf-faq details p { margin: 9px 0 3px; line-height: 1.55; }
+
+/* Lighthouse desktop stability: reserve the viewport while React mounts,
+   so crawler-readable information below the editor never jumps into view. */
+#root { min-height: 100vh; }
+
+/* WCAG AA: muted text must remain legible on the pale brand surfaces. */
+.dropzone small { color: #52645d; }
+.benefits article > span { color: #476b58; }
+.seo-help p { color: #415b50; }
+.seo-help .seo-help-note { color: #415b50; }
