@@ -29,8 +29,8 @@ jobs:
       - run: npm run lint
       - run: npm run typecheck
       - run: npm test
-      - run: npx playwright install --with-deps chromium
-      - run: npm run test:e2e
+      # Browser tests run in Verify CI; avoid duplicate browser installs in Pages builds.
+      # PR checks already run the full desktop/mobile regression suite.
       - run: npm run build
       - uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
         with:
