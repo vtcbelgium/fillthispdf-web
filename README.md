@@ -57,8 +57,23 @@ Static hosting is sufficient. Target domain: `fillthispdf.othrys.be`.
 
 - Node.js 24; install with `npm ci`; build with `npm run build`; publish `dist/`.
 - `prebuild` copies PDF.js character maps, fonts and decoder assets from the locked dependency into `public/pdfjs/`, then Vite includes them in `dist/`. Do not omit these directories, the PDF worker `.mjs`, or `fonts/NotoSans-Regular.ttf`.
-- Serve `.mjs` as JavaScript, `.wasm` as `application/wasm`, and `.ttf` as a font. Use HTTPS. The default configuration expects hosting at the domain root.
+- Serve `.mjs` as JavaScript, `.wasm` as `application/wasm`, and `.ttf` as a font. Use HTTPS. Vite's relative asset base (`./`) supports both `/fillthispdf-web/` and a domain root with the same build.
 - Cache hashed `/assets/` files immutably; revalidate `index.html` and unversioned font/decoder assets on releases. No API routes, secrets or external services are needed.
 - Configure the domain, DNS, canonical URL and search indexing only after separate deployment review. This PR does not deploy, merge or modify DNS.
 
 Noto Sans is redistributed under the [SIL Open Font License](public/fonts/LICENSE.txt). PDF.js and pdf-lib retain their respective dependency licenses.
+
+### GitHub Pages fallback
+
+The public repository can use free GitHub Pages hosting while Vercel project creation is blocked (403). `.github/workflows/pages.yml` deploys only `main`, on push or manual dispatch. It installs locked dependencies, runs lint, typecheck, PDF and desktop/mobile browser tests, builds, uploads only `dist/`, and deploys after the build job succeeds. Actions are pinned to commit SHAs; the build has read-only repository access and only the separate deploy job has Pages/OIDC write permissions. No credentials or provider setup are needed.
+
+After merging this PR:
+
+1. Open repository **Settings → Pages → Build and deployment** and verify **GitHub Actions** is the source (already configured when this release was prepared; select it if needed). Leave **Custom domain** empty.
+2. Under **Settings → Environments → github-pages**, restrict deployment branches/tags to the selected branch `main` (create the environment if it does not exist). Approve deployments if your environment requires reviewers.
+3. Open **Actions → Deploy GitHub Pages → Run workflow**, select `main`, and run it. If the merge-triggered run already succeeded after Pages was enabled, no rerun is needed. If it ran before Pages was enabled and failed, rerun it now.
+4. Wait for both `build` and `deploy` to succeed. Open the deployment URL: <https://vtcbelgium.github.io/fillthispdf-web/>. Confirm a synthetic PDF renders and exports on desktop and mobile; refresh the page to verify assets still load.
+
+Future pushes to `main` publish automatically; PRs use the existing Verify workflow and cannot deploy. GitHub Pages controls response caching. This change does not enable Pages, deploy, configure a custom domain, change DNS or Vercel settings, or change app features. The future `fillthispdf.othrys.be` root uses the same relative build, but domain setup remains a separate task.
+
+References: [GitHub Pages custom workflows](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages) and [Vite relative base](https://vite.dev/guide/build.html#relative-base).
