@@ -1,4 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 import worker, { MODEL, type Env } from "../workers/fillthispdf-ai/src/index";
 import {
   LIMITS,
@@ -7,6 +9,7 @@ import {
   readBounded,
 } from "../shared/ai";
 import { aiEndpoint, matchFields, suggestedValue } from "../src/ai";
+import { AiPanel, parsePolicyUrl } from "../src/AiPanel";
 import type { FormField } from "../src/pdf";
 
 const input = { fields: ["Name"], text: "My name is Jane" };
@@ -34,6 +37,7 @@ function request(body: unknown = input, headers: Record<string, string> = {}) {
 afterEach(() => {
   vi.restoreAllMocks();
   vi.unstubAllGlobals();
+  vi.unstubAllEnvs();
   vi.useRealTimers();
 });
 describe("Worker boundary", () => {
@@ -341,5 +345,109 @@ describe("browser boundary", () => {
     expect(
       suggestedValue({ ...field, kind: "radio", options: ["BE"] }, "US"),
     ).toBeUndefined();
+  });
+
+  describe("parsePolicyUrl", () => {
+    it.each([
+      "https://developers.cloudflare.com/workers-ai/platform/data-usage/",
+      "https://example.com/privacy",
+      "https://openrouter.ai/privacy?lang=en#section",
+      "http://localhost:5173/privacy",
+      "http://127.0.0.1:8787/privacy",
+    ])("accepts valid HTTPS and local dev policy URLs: %s", (url) => {
+      expect(parsePolicyUrl(url)).toBe(url);
+    });
+
+    it.each([
+      undefined,
+      "",
+      "not-a-url",
+      "http://insecure.example.com/privacy",
+      "https://user:pass@example.com/privacy",
+      "javascript:alert(1)",
+      "data:text/html,evil",
+      "file:///etc/passwd",
+    ])("rejects invalid or unsafe policy URL: %s", (url) => {
+      expect(parsePolicyUrl(url)).toBe(null);
+    });
+  });
+
+  describe("AiPanel provider policy URL enforcement", () => {
+    const dummyFields: FormField[] = [
+      {
+        name: "Full name",
+        kind: "text",
+        options: [],
+        readOnly: false,
+        multiline: false,
+      },
+    ];
+
+    it("requires valid provider policy URL before alternate provider consent can be given", () => {
+      vi.stubEnv("VITE_AI_ENDPOINT", "https://worker.example/match");
+      vi.stubEnv("VITE_AI_PROVIDER_ID", "openai-compatible");
+      vi.stubEnv("VITE_AI_PROVIDER_NAME", "OpenRouter");
+      vi.stubEnv("VITE_AI_PROVIDER_POLICY_URL", "");
+
+      const html = renderToStaticMarkup(
+        createElement(AiPanel, {
+          fields: dummyFields,
+          lang: "en",
+          onApply: () => {},
+        }),
+      );
+
+      // Warning alert must be rendered explaining that no valid policy URL is configured
+      expect(html).toContain(
+        "No valid provider privacy policy URL is configured for OpenRouter. Consent cannot be granted.",
+      );
+      // The consent checkbox must have disabled attribute
+      expect(html).toMatch(
+        /<input[^>]*type="checkbox"[^>]*disabled=""[^>]*\/>.*I consent/,
+      );
+    });
+
+    it("enables consent and provides clickable policy link when alternate provider policy URL is valid", () => {
+      vi.stubEnv("VITE_AI_ENDPOINT", "https://worker.example/match");
+      vi.stubEnv("VITE_AI_PROVIDER_ID", "openai-compatible");
+      vi.stubEnv("VITE_AI_PROVIDER_NAME", "OpenRouter");
+      vi.stubEnv(
+        "VITE_AI_PROVIDER_POLICY_URL",
+        "https://openrouter.ai/privacy",
+      );
+
+      const html = renderToStaticMarkup(
+        createElement(AiPanel, {
+          fields: dummyFields,
+          lang: "en",
+          onApply: () => {},
+        }),
+      );
+
+      // Policy link must be rendered with provider name and target="_blank"
+      expect(html).toContain('href="https://openrouter.ai/privacy"');
+      expect(html).toContain("OpenRouter privacy policy");
+      expect(html).not.toContain(
+        "No valid provider privacy policy URL is configured",
+      );
+    });
+
+    it("provides official Cloudflare policy link by default without requiring VITE_AI_PROVIDER_POLICY_URL", () => {
+      vi.stubEnv("VITE_AI_ENDPOINT", "https://worker.example/match");
+      vi.stubEnv("VITE_AI_PROVIDER_ID", "cloudflare");
+
+      const html = renderToStaticMarkup(
+        createElement(AiPanel, {
+          fields: dummyFields,
+          lang: "en",
+          onApply: () => {},
+        }),
+      );
+
+      expect(html).toContain(
+        'href="https://developers.cloudflare.com/workers-ai/platform/data-usage/"',
+      );
+      expect(html).toContain("Cloudflare data usage");
+    });
   });
 });

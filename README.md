@@ -93,3 +93,9 @@ See [provider deployment and privacy configuration](workers/fillthispdf-ai/READM
 
 AI remains disabled on the live site unless an authenticated, review-tested
 Worker URL is configured and a new website build is deliberately deployed.
+
+### Provider Privacy Policy Requirements & Release Hold
+
+For any alternate AI provider (such as an OpenAI-compatible endpoint), the build must configure a valid, public HTTPS privacy policy URL (`VITE_AI_PROVIDER_POLICY_URL` or `VITE_AI_POLICY_URL`). The frontend strictly validates this URL (requiring HTTPS and rejecting credentials) and displays a direct link to the provider's privacy policy. If a valid policy URL is missing or invalid, consent cannot be granted, and the request cannot be sent.
+
+**Release HOLD blocker:** General privacy copy for alternate providers currently uses fallback inline strings in `src/AiPanel.tsx` because `src/i18n.ts` was protected by TEKTON (`FILESYSTEM_SECRET_MATERIAL_REFUSED`). Before any alternate provider release or deployment, full localized privacy terms must be reviewed and merged into translation catalogs once protection is lifted.

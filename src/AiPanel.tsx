@@ -5,6 +5,26 @@ import { aiMessages } from "./ai-i18n";
 import type { Language } from "./i18n";
 import type { FormField, Values } from "./pdf";
 
+export function parsePolicyUrl(raw: string | undefined): string | null {
+  if (!raw) return null;
+  try {
+    const url = new URL(raw);
+    if (url.username || url.password) return null;
+    if (
+      url.protocol !== "https:" &&
+      !(
+        url.protocol === "http:" &&
+        ["localhost", "127.0.0.1"].includes(url.hostname)
+      )
+    ) {
+      return null;
+    }
+    return url.href;
+  } catch {
+    return null;
+  }
+}
+
 type Proposal = { name: string; value: Values[string]; approved: boolean };
 export function AiPanel({
   fields,
@@ -17,11 +37,27 @@ export function AiPanel({
 }) {
   const t = aiMessages[lang];
   const providerId = aiProviderId(import.meta.env.VITE_AI_PROVIDER_ID);
-  const declaredName = (import.meta.env.VITE_AI_PROVIDER_NAME as string | undefined)?.trim();
-  const providerName = declaredName || (providerId === "cloudflare" ? "Cloudflare Workers AI" : "");
+  const declaredName = (
+    import.meta.env.VITE_AI_PROVIDER_NAME as string | undefined
+  )?.trim();
+  const providerName =
+    declaredName ||
+    (providerId === "cloudflare" ? "Cloudflare Workers AI" : "");
   // A changed provider cannot be offered without explicitly naming it to the visitor.
   const endpoint =
-    providerId && providerName ? aiEndpoint(import.meta.env.VITE_AI_ENDPOINT) : null;
+    providerId && providerName
+      ? aiEndpoint(import.meta.env.VITE_AI_ENDPOINT)
+      : null;
+  const declaredPolicyUrl = parsePolicyUrl(
+    (import.meta.env.VITE_AI_PROVIDER_POLICY_URL ||
+      import.meta.env.VITE_AI_POLICY_URL) as string | undefined,
+  );
+  const policyUrl =
+    providerId === "cloudflare"
+      ? "https://developers.cloudflare.com/workers-ai/platform/data-usage/"
+      : declaredPolicyUrl;
+  const hasValidPolicy = Boolean(policyUrl);
+
   const [entries, setEntries] = useState(() =>
     fields
       .filter((f) => !f.readOnly)
@@ -56,7 +92,15 @@ export function AiPanel({
     setStatus(null);
   }
   async function send() {
-    if (!endpoint || !providerId || !valid || !consent || controller.current) return;
+    if (
+      !endpoint ||
+      !providerId ||
+      !valid ||
+      !consent ||
+      !hasValidPolicy ||
+      controller.current
+    )
+      return;
     const active = new AbortController();
     controller.current = active;
     setConsent(false);
@@ -65,7 +109,12 @@ export function AiPanel({
     setProposals([]);
     const timeout = setTimeout(() => active.abort(), 22000);
     try {
-      const suggestions = await matchFields(endpoint, payload, active.signal, providerId);
+      const suggestions = await matchFields(
+        endpoint,
+        payload,
+        active.signal,
+        providerId,
+      );
       if (active.signal.aborted) return;
       const next = suggestions.map((s) => {
         const entry = entries.find((e) => e.selected && e.label === s.field);
@@ -105,22 +154,33 @@ export function AiPanel({
           {providerId === "cloudflare" ? (
             <p>
               {t.terms}{" "}
-              <a
-                href="https://developers.cloudflare.com/workers-ai/platform/data-usage/"
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a href={policyUrl ?? undefined} target="_blank" rel="noreferrer">
                 {t.policy}
               </a>
             </p>
-          ) : (
-            <p>{
-              lang === "nl"
-                ? `${providerName} verwerkt deze geselecteerde gegevens op afstand. Controleer het privacybeleid van deze provider voordat je toestemming geeft.`
+          ) : policyUrl ? (
+            <p>
+              {lang === "nl"
+                ? `${providerName} verwerkt deze geselecteerde gegevens op afstand. `
                 : lang === "fr"
-                  ? `${providerName} traite ces données sélectionnées à distance. Consultez la politique de confidentialité du fournisseur avant de consentir.`
-                  : `${providerName} processes this selected data remotely. Review the provider privacy policy before consenting.`
-            }</p>
+                  ? `${providerName} traite ces données sélectionnées à distance. `
+                  : `${providerName} processes this selected data remotely. `}
+              <a href={policyUrl} target="_blank" rel="noreferrer">
+                {lang === "nl"
+                  ? `Privacybeleid ${providerName}`
+                  : lang === "fr"
+                    ? `Politique de confidentialité ${providerName}`
+                    : `${providerName} privacy policy`}
+              </a>
+            </p>
+          ) : (
+            <p role="alert">
+              {lang === "nl"
+                ? `Er is geen geldige privacybeleid-URL geconfigureerd voor ${providerName}. Toestemming kan niet worden gegeven.`
+                : lang === "fr"
+                  ? `Aucune URL valide de politique de confidentialité n'est configurée pour ${providerName}. Le consentement ne peut pas être accordé.`
+                  : `No valid provider privacy policy URL is configured for ${providerName}. Consent cannot be granted.`}
+            </p>
           )}
           <fieldset disabled={pending}>
             <legend>{t.fields}</legend>
@@ -179,12 +239,15 @@ export function AiPanel({
               <input
                 type="checkbox"
                 checked={consent}
-                disabled={!valid}
+                disabled={!valid || !hasValidPolicy}
                 onChange={(e) => setConsent(e.target.checked)}
               />
               {t.consent.replaceAll("Cloudflare Workers AI", providerName)}
             </label>
-            <button disabled={!consent || !valid} onClick={() => void send()}>
+            <button
+              disabled={!consent || !valid || !hasValidPolicy}
+              onClick={() => void send()}
+            >
               {t.send}
             </button>
           </fieldset>
