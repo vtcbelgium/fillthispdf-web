@@ -77,3 +77,14 @@ After merging this PR:
 Future pushes to `main` publish automatically; PRs use the existing Verify workflow and cannot deploy. GitHub Pages controls response caching. This change does not enable Pages, deploy, configure a custom domain, change DNS or Vercel settings, or change app features. The future `fillthispdf.othrys.be` root uses the same relative build, but domain setup remains a separate task.
 
 References: [GitHub Pages custom workflows](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages) and [Vite relative base](https://vite.dev/guide/build.html#relative-base).
+
+## Search-friendly release
+
+The public editor is a genuinely free, local-first PDF filler with no account,
+paywall or watermark. The static SEO build includes clear English documentation
+under `/`, Dutch instructions under `/nl/`, French instructions under `/fr/`,
+and `/sitemap.xml`. The language pages lead directly to the same working
+browser editor. No duplicate PDF backend or payment services were introduced.
+
+For release verification, Search Console, custom-domain migration and known
+performance limitations, see [SEO release checklist](docs/SEO-RELEASE.md).

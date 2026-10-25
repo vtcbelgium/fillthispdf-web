@@ -11,8 +11,8 @@
     "lint": "eslint .",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "predev": "node scripts/copy-pdf-assets.mjs",
-    "prebuild": "node scripts/copy-pdf-assets.mjs",
+    "predev": "node scripts/copy-pdf-assets.mjs && node scripts/build-seo-pages.mjs",
+    "prebuild": "node scripts/copy-pdf-assets.mjs && node scripts/build-seo-pages.mjs",
     "format": "prettier --write src tests scripts *.ts *.js *.json index.html"
   },
   "dependencies": {
