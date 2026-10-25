@@ -94,6 +94,7 @@ function page(lang) {
       <h3>${e(t.why)}</h3>
       <p>${e(t.detail)}</p>
       <p class="seo-help-note">${e(t.note)}</p>
+      <p><a href="${dir}sample-form.pdf" download="FillThisPDF-Sample-Form.pdf">${lang === "nl" ? "Download een voorbeeld-PDF" : lang === "fr" ? "T&eacute;l&eacute;charger un PDF d'exemple" : "Download a free sample PDF to try"}</a></p>
       <nav aria-label="Languages">
         ${allLangs.map((key,i)=>`<a hreflang="${key}" lang="${key}" href="${href(key)}"${key===lang?' aria-current="page"':''}>${e(t.links[i])}</a>`).join(" · ")}
       </nav>
