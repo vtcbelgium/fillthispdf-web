@@ -1,7 +1,8 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { resolve, dirname } from "node:path";
+import { siteOrigin } from "./site-origin.mjs";
 
-const domain = "https://vtcbelgium.github.io/fillthispdf-web/";
+const domain = siteOrigin();
 const locales = {
   en: {
     path: "", lang: "en",
