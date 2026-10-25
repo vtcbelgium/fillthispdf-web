@@ -1,6 +1,12 @@
-# FillThisPDF v0.1
+# FillThisPDF — Fill PDF Forms Online for Free
 
-**Got a PDF to fill? Drop it here.** A standalone React + TypeScript + Vite app that reads, previews, fills and exports PDFs entirely in the browser. Implements [issue #1](https://github.com/vtcbelgium/fillthispdf-web/issues/1).
+**Have a PDF to fill?** Upload it, fill fields or add text and checkmarks, then download your completed PDF. **No account, subscription, trial, watermark or paywall.** Manual PDF editing runs locally in your browser; your document is not uploaded.
+
+**[Open the free PDF editor](https://vtcbelgium.github.io/fillthispdf-web/)** · **[Download a sample fillable PDF](https://vtcbelgium.github.io/fillthispdf-web/sample-form.pdf)**
+
+**Other languages:** [PDF invullen online gratis (NL)](https://vtcbelgium.github.io/fillthispdf-web/nl/) · [Remplir un PDF gratuitement (FR)](https://vtcbelgium.github.io/fillthispdf-web/fr/)
+
+This open-source app is built with React, TypeScript, Vite, PDF.js and pdf-lib. It supports interactive form fields and adding text to ordinary/scanned pages, but does not OCR existing text or provide certified digital signatures. See [issue #1](https://github.com/vtcbelgium/fillthispdf-web/issues/1) for the original scope.
 
 ## Run locally
 
