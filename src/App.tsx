@@ -11,6 +11,7 @@ import {
 import { languages, type Language } from "./i18n";
 import { Page } from "./Page";
 import { FieldControl } from "./Fields";
+import { AiPanel } from "./AiPanel";
 
 type State = { edits: Edit[]; values: Values };
 type History = { past: State[]; current: State; future: State[] };
@@ -30,6 +31,7 @@ export default function App() {
   const t = languages[lang];
   const [pdf, setPdf] = useState<LoadedPdf | null>(null),
     [filename, setFilename] = useState("");
+  const [documentVersion, setDocumentVersion] = useState(0);
   const [history, setHistory] = useState<History>(empty),
     [selected, setSelected] = useState<string | null>(null);
   const [tool, setTool] = useState<Edit["kind"] | "select">("text"),
@@ -149,6 +151,7 @@ export default function App() {
         new Uint8Array(await response.arrayBuffer()),
       );
       setPdf(loaded);
+      setDocumentVersion((version) => version + 1);
       setFilename(file.name);
       setHistory({
         past: [],
@@ -615,14 +618,14 @@ export default function App() {
           aria-label={t.choose}
           onChange={(e) => void open(e.target.files?.[0])}
         />
-        <details className="ai-panel">
-          <summary>
-            {t.ai}
-            <span>{t.aiUnavailable}</span>
-          </summary>
-          <p>{t.aiBody}</p>
-          <button disabled>{t.aiUnavailable}</button>
-        </details>
+        <AiPanel
+          key={pdf ? documentVersion : "empty"}
+          fields={pdf?.fields ?? []}
+          lang={lang}
+          onApply={(approved) =>
+            change({ ...history.current, values: { ...values, ...approved } })
+          }
+        />
         <section className="faq">
           <div>
             <p className="eyebrow">FILLTHISPDF</p>

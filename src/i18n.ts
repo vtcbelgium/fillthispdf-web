@@ -11,7 +11,7 @@ export const en = {
   local: "Your documents stay on your device.",
   privacy: "Private by design",
   privacyBody:
-    "Files and edits stay in this tab’s memory. Nothing is uploaded or saved on a server. Closing or refreshing this page clears your work. There are no analytics or external AI requests.",
+    "Your PDF stays on your device. Manual filling and export are local. Optional AI sends only selected labels and entered instructions to Cloudflare after consent. No analytics. Closing or refreshing clears this tab’s work.",
   free: "Free, start to finish",
   freeBody: "No account. No watermark. No payment to download.",
   flat: "Works with ordinary PDFs",
@@ -55,15 +55,11 @@ export const en = {
     "These are the original PDF fields. You can fill them here or on the page.",
   unsupported:
     "Some special fields are not editable. Their original content is preserved. Digital signatures may be invalidated by edits.",
-  ai: "AI assistance",
-  aiUnavailable: "AI not configured",
-  aiBody:
-    "No AI provider is connected. Manual editing works fully, and no document data is sent to an AI service.",
   faq: "A few good questions",
   q1: "Can I fill a scanned or flat PDF?",
   a1: "Yes. Place text, dates or checkmarks anywhere on the page. This tool adds content; it does not rewrite or erase the original.",
   q2: "Will my PDF be uploaded?",
-  a2: "No. Previewing, filling and downloading happen on your device. Keep this tab open until you have downloaded your work.",
+  a2: "Your PDF stays on your device. Manual filling and export are local. Optional AI sends only selected labels and entered instructions to Cloudflare after consent. No analytics. Closing or refreshing clears this tab’s work.",
   q3: "Can I sign my PDF?",
   a3: "You can add a simple typed signature. This is not a qualified or certified digital signature.",
   q4: "Does it work on my phone?",
@@ -105,7 +101,7 @@ const nl: Messages = {
   local: "Je documenten blijven op je apparaat.",
   privacy: "Privacy voorop",
   privacyBody:
-    "Bestanden en wijzigingen blijven in het geheugen van dit tabblad. Niets wordt geüpload of op een server opgeslagen. Sluiten of vernieuwen wist je werk. Geen analyses of externe AI-verzoeken.",
+    "Je PDF blijft op je apparaat. Handmatig invullen en exporteren gebeuren lokaal. Optionele AI stuurt alleen geselecteerde labels en ingevoerde instructies naar Cloudflare na toestemming. Geen analytics. Sluiten of vernieuwen wist je werk.",
   free: "Gratis van begin tot eind",
   freeBody: "Geen account. Geen watermerk. Geen betaling om te downloaden.",
   flat: "Ook voor gewone PDF’s",
@@ -150,15 +146,11 @@ const nl: Messages = {
     "Dit zijn de originele PDF-velden. Vul ze hier of op de pagina in.",
   unsupported:
     "Sommige speciale velden zijn niet bewerkbaar. De oorspronkelijke inhoud blijft behouden. Digitale handtekeningen kunnen ongeldig worden door wijzigingen.",
-  ai: "AI-hulp",
-  aiUnavailable: "AI niet ingesteld",
-  aiBody:
-    "Er is geen AI-provider verbonden. Handmatig bewerken werkt volledig. Er worden geen documentgegevens naar AI verstuurd.",
   faq: "Veelgestelde vragen",
   q1: "Kan ik een scan of vlakke PDF invullen?",
   a1: "Ja. Plaats tekst, datums of vinkjes op de pagina. Deze tool voegt inhoud toe en wist of herschrijft het origineel niet.",
   q2: "Wordt mijn PDF geüpload?",
-  a2: "Nee. Bekijken, invullen en downloaden gebeurt op je apparaat. Houd dit tabblad open tot je je werk hebt gedownload.",
+  a2: "Je PDF blijft op je apparaat. Handmatig invullen en exporteren gebeuren lokaal. Optionele AI stuurt alleen geselecteerde labels en ingevoerde instructies naar Cloudflare na toestemming. Geen analytics. Sluiten of vernieuwen wist je werk.",
   q3: "Kan ik mijn PDF ondertekenen?",
   a3: "Je kunt een getypte handtekening toevoegen. Dit is geen gekwalificeerde of gecertificeerde digitale handtekening.",
   q4: "Werkt dit op mijn telefoon?",
@@ -201,7 +193,7 @@ const fr: Messages = {
   local: "Vos documents restent sur votre appareil.",
   privacy: "La confidentialité avant tout",
   privacyBody:
-    "Les fichiers et modifications restent dans la mémoire de cet onglet. Rien n’est envoyé ni enregistré sur un serveur. Fermer ou actualiser la page efface votre travail. Aucune analyse ni requête IA externe.",
+    "Votre PDF reste sur votre appareil. La saisie manuelle et l’export sont locaux. L’IA facultative envoie uniquement les libellés sélectionnés et vos instructions à Cloudflare après consentement. Aucune analyse. Fermer ou actualiser efface votre travail.",
   free: "Gratuit du début à la fin",
   freeBody: "Sans compte. Sans filigrane. Sans paiement pour télécharger.",
   flat: "Pour les PDF ordinaires aussi",
@@ -245,15 +237,11 @@ const fr: Messages = {
     "Voici les champs du PDF original. Remplissez-les ici ou sur la page.",
   unsupported:
     "Certains champs spéciaux ne sont pas modifiables. Leur contenu est conservé. Les modifications peuvent invalider les signatures numériques.",
-  ai: "Assistance IA",
-  aiUnavailable: "IA non configurée",
-  aiBody:
-    "Aucun fournisseur IA n’est connecté. La modification manuelle fonctionne pleinement. Aucune donnée du document n’est envoyée à une IA.",
   faq: "Quelques réponses utiles",
   q1: "Puis-je remplir un PDF scanné ou aplati ?",
   a1: "Oui. Placez du texte, des dates ou des coches sur la page. Cet outil ajoute du contenu sans réécrire ni effacer l’original.",
   q2: "Mon PDF est-il envoyé en ligne ?",
-  a2: "Non. L’aperçu, la saisie et le téléchargement se font sur votre appareil. Gardez cet onglet ouvert jusqu’au téléchargement.",
+  a2: "Votre PDF reste sur votre appareil. La saisie manuelle et l’export sont locaux. L’IA facultative envoie uniquement les libellés sélectionnés et vos instructions à Cloudflare après consentement. Aucune analyse. Fermer ou actualiser efface votre travail.",
   q3: "Puis-je signer mon PDF ?",
   a3: "Vous pouvez ajouter une signature saisie. Ce n’est pas une signature numérique qualifiée ou certifiée.",
   q4: "Cela fonctionne-t-il sur mon téléphone ?",

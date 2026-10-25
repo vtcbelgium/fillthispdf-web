@@ -812,3 +812,59 @@ aside p {
     grid-column: 5;
   }
 }
+.ai-panel fieldset {
+  border: 0;
+  padding: 0;
+  min-width: 0;
+}
+.ai-fields {
+  max-height: 18rem;
+  overflow: auto;
+  margin: 1rem 0;
+}
+.ai-field {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+.ai-field label,
+.ai-consent {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  overflow-wrap: anywhere;
+}
+.ai-field input:not([type="checkbox"]) {
+  min-width: 0;
+  width: 100%;
+}
+.ai-consent {
+  margin: 1rem 0;
+  flex-wrap: wrap;
+}
+.ai-consent input,
+.ai-field input[type="checkbox"] {
+  flex: 0 0 auto;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.ai-payload {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 18rem;
+  overflow: auto;
+  background: #f1f4f2;
+  padding: 1rem;
+}
+.ai-review {
+  border-top: 1px solid #ccd8d3;
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
+@media (max-width: 600px) {
+  .ai-field {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+}

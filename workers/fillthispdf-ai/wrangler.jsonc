@@ -1,0 +1,18 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "fillthispdf-ai",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": true,
+  "preview_urls": false,
+  "ai": { "binding": "AI" },
+  "ratelimits": [
+    {
+      "name": "RATE_LIMITER",
+      "namespace_id": "1004",
+      "simple": { "limit": 3, "period": 60 },
+    },
+  ],
+  "vars": { "FREE_PLAN_CONFIRMED": "false", "AI_PROVIDER": "cloudflare" },
+  "observability": { "enabled": false },
+}
