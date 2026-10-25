@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { AnnotationMode } from "pdfjs-dist/legacy/build/pdf.mjs";
+// PDF.js AnnotationMode.ENABLE = 1. Keep its renderer out of the initial page bundle.
+const ANNOTATIONS_ENABLE = 1;
 import type { Edit, LoadedPdf, Values } from "./pdf";
 import type { Messages } from "./i18n";
 import { FieldControl } from "./Fields";
@@ -80,7 +81,7 @@ export function Page({
         render = page.render({
           canvas: el,
           viewport,
-          annotationMode: AnnotationMode.ENABLE,
+          annotationMode: ANNOTATIONS_ENABLE,
         });
         return render.promise;
       })
