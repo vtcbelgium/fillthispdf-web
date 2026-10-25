@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Noto Sans";
-  src: url("/fonts/NotoSans-Regular.ttf") format("truetype");
+  src: url("../fonts/NotoSans-Regular.ttf") format("truetype");
   font-weight: 100 900;
   font-display: swap;
 }
@@ -812,3 +812,20 @@ aside p {
     grid-column: 5;
   }
 }
+
+/* Crawlable help appears beneath the PDF tool and is never a pop-up or gate. */
+.seo-help {
+  border-top: 1px solid #d9e4df;
+  background: #f4f8f5;
+  padding: 30px 20px 44px;
+}
+.seo-help-inner { max-width: 940px; margin: 0 auto; }
+.seo-help h2 { font-size: clamp(21px, 3vw, 29px); line-height: 1.25; margin: 0 0 14px; }
+.seo-help h3 { font-size: 18px; margin: 20px 0 7px; }
+.seo-help p { margin: 8px 0; max-width: 75ch; }
+.seo-help ol { margin: 15px 0; padding-left: 25px; }
+.seo-help li { padding: 4px 0; }
+.seo-help .seo-help-note { color: #4f6565; font-size: 13px; }
+.seo-help nav { display: flex; flex-wrap: wrap; gap: 12px; padding-top: 14px; }
+.seo-help nav a { text-underline-offset: 3px; color: #0b6257; }
+.seo-help nav a[aria-current="page"] { font-weight: 700; }
