@@ -1,5 +1,6 @@
 import {
   PDFDocument,
+  PDFRef,
   PDFTextField,
   PDFCheckBox,
   PDFDropdown,
@@ -296,5 +297,15 @@ export async function exportPdf(
       });
     }
   }
-  return doc.save({ updateFieldAppearances: false });
+  // Some PDF generators append an incremental catalog with a nonzero
+  // object generation (for example, when attaching Content Credentials).
+  // The older catalog reference can become invalid in pdf-lib's output.
+  // Register it anew before serializing so strict PDF readers can reopen it.
+  const oldRoot = doc.context.trailerInfo.Root;
+  if (oldRoot instanceof PDFRef && oldRoot.generationNumber !== 0) {
+    doc.context.trailerInfo.Root = doc.context.register(doc.catalog);
+    doc.context.delete(oldRoot);
+  }
+  // Classic xref tables are more interoperable with Acrobat and strict readers.
+  return doc.save({ updateFieldAppearances: false, useObjectStreams: false });
 }
