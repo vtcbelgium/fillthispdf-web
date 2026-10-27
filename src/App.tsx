@@ -20,13 +20,12 @@ const empty = (): History => ({
   future: [],
 });
 export default function App() {
-  const [lang, setLang] = useState<Language>(() =>
-    navigator.language.startsWith("nl")
-      ? "nl"
-      : navigator.language.startsWith("fr")
-        ? "fr"
-        : "en",
-  );
+  // The English editor URL keeps its authored English SEO metadata on first load.
+  const [lang, setLang] = useState<Language>("en");
+  const originalSeo = useRef({
+    title: document.title,
+    description: document.querySelector<HTMLMetaElement>('meta[name="description"]')?.content ?? "",
+  });
   const t = languages[lang];
   const [pdf, setPdf] = useState<LoadedPdf | null>(null),
     [filename, setFilename] = useState("");
@@ -93,10 +92,10 @@ export default function App() {
   const dirty = history.past.length > 0 || edits.length > 0;
   useEffect(() => {
     document.documentElement.lang = lang;
-    document.title = `FillThisPDF — ${t.title}`;
+    document.title = lang === "en" ? originalSeo.current.title : "FillThisPDF — " + t.title;
     document
       .querySelector('meta[name="description"]')
-      ?.setAttribute("content", t.intro);
+      ?.setAttribute("content", lang === "en" ? originalSeo.current.description : t.intro);
   }, [lang, t]);
   useEffect(() => {
     if (!dirty) return;
