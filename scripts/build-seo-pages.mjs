@@ -121,4 +121,5 @@ ${allLangs.map((key) => `  <url><loc>${href(key)}</loc>${allLangs.map(alt=>`<xht
 </urlset>
 `;
 await writeFile(resolve("public/sitemap.xml"), sitemap, "utf8");
+await writeFile(resolve("public/robots.txt"), `User-agent: *\nAllow: /\n\nSitemap: ${domain}sitemap.xml\n`, "utf8");
 // Generated pages are part of the checked-in release and validated in tests.
