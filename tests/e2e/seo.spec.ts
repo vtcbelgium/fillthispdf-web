@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { PDFDocument } from "pdf-lib";
+import { siteOrigin } from "../../scripts/site-origin.mjs";
 
 const locales = [
   {path: "/nl/", lang:"nl", title:/PDF invullen online gratis/, cta:/Gratis PDF-editor openen/},
@@ -10,7 +11,7 @@ test("homepage exposes free PDF product metadata and no paywall", async ({page})
   await page.goto("/");
   await expect(page.getByRole("heading", { name: /Got a PDF to fill/i })).toBeVisible();
   await expect(page.getByRole("heading", {name:/Fill in a PDF online/i})).toBeVisible();
-  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href","https://vtcbelgium.github.io/fillthispdf-web/");
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", siteOrigin());
   await expect(page.getByText("No account. No watermark. No payment to download.")).toBeVisible();
   await expect(page.locator("a[href*='pdffiller.com']")).toHaveCount(0);
   const links = page.locator('link[rel="alternate"][hreflang]');
@@ -24,10 +25,10 @@ for (const loc of locales) {
     await expect(page).toHaveTitle(loc.title);
     const cta=page.getByRole("link",{name:loc.cta});
     await expect(cta).toBeVisible();
-    await Promise.all([
-      page.waitForURL("**/"),
-      cta.click(),
-    ]);
+    // Check the public CTA URL without navigating to the not-yet-live custom hostname.
+    // Exercise the same production editor through Playwright\u0027s local preview instead.
+    await expect(cta).toHaveAttribute("href", siteOrigin());
+    await page.goto("/");
     await expect(page.getByRole("heading",{name:/Got a PDF to fill/i})).toBeVisible();
     const pdf=await PDFDocument.create();pdf.addPage([612,792]);
     await page.getByLabel("Choose a PDF",{exact:true}).setInputFiles({
@@ -51,5 +52,8 @@ test("sitemap is served as crawlable XML",async ({request})=>{
   expect(result.headers()["content-type"]).toMatch(/xml/);
   const text=await result.text();
   expect(text).toContain("<urlset");
-  expect(text).toContain("<loc>https://vtcbelgium.github.io/fillthispdf-web/fr/</loc>");
+  expect(text).toContain("<loc>" + siteOrigin() + "fr/</loc>");
+  const robots=await request.get("/robots.txt");
+  expect(robots.status()).toBe(200);
+  expect(await robots.text()).toContain("Sitemap: " + siteOrigin() + "sitemap.xml");
 });

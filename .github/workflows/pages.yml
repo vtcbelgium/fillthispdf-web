@@ -31,7 +31,13 @@ jobs:
       - run: npm test
       # Browser tests run in Verify CI; avoid duplicate browser installs in Pages builds.
       # PR checks already run the full desktop/mobile regression suite.
+      # Custom-domain migration: keep the PR as DRAFT until the verified DNS / HTTPS cutover.
       - run: npm run build
+        env:
+          FILLTHISPDF_SITE_URL: https://fillthispdf.othrys.be/
+      - run: node scripts/verify-built-seo-origin.mjs
+        env:
+          FILLTHISPDF_SITE_URL: https://fillthispdf.othrys.be/
       - uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
         with:
           path: dist
