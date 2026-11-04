@@ -1,3 +1,4 @@
+// [HARVESTED TO OTHRYS-BLOCKS] target: blocks/pdf/client-pdf-form-filler/index.ts | date: 2026-11-05 | status: HARVEST_RETAIN
 // Browser entry point. Keep the heavy PDF engines out of the initial page bundle.
 // PDF.js and pdf-lib are fetched only when the visitor opens or exports a PDF.
 import type { Edit, LoadedPdf, PageInfo, Values } from "./pdf-heavy";

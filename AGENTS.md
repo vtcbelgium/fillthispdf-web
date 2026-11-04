@@ -1,3 +1,4 @@
+<!-- [HARVESTED TO OTHRYS-BLOCKS] target: knowledge/books/book-of-fillthispdf.md | date: 2026-11-05 | status: ARCHITECTURE_BOOK -->
 # FillThisPDF — T3 Code instructions
 
 You are the IMPLEMENTATION BUILDER for FillThisPDF, a standalone one-page PDF filling web app. Deliver working code, not another proposal. The architect has already decided the scope in docs/PRODUCT.md.
