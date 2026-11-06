@@ -10,7 +10,7 @@ test("homepage exposes free PDF product metadata and no paywall", async ({page})
   await page.goto("/");
   await expect(page.getByRole("heading", { name: /Got a PDF to fill/i })).toBeVisible();
   await expect(page.getByRole("heading", {name:/Fill in a PDF online/i})).toBeVisible();
-  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href","https://vtcbelgium.github.io/fillthispdf-web/");
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href","https://fillthispdf.othrys.be/");
   await expect(page.getByText("No account. No watermark. No payment to download.")).toBeVisible();
   await expect(page.locator("a[href*='pdffiller.com']")).toHaveCount(0);
   const links = page.locator('link[rel="alternate"][hreflang]');
@@ -51,5 +51,5 @@ test("sitemap is served as crawlable XML",async ({request})=>{
   expect(result.headers()["content-type"]).toMatch(/xml/);
   const text=await result.text();
   expect(text).toContain("<urlset");
-  expect(text).toContain("<loc>https://vtcbelgium.github.io/fillthispdf-web/fr/</loc>");
+  expect(text).toContain("<loc>https://fillthispdf.othrys.be/fr/</loc>");
 });

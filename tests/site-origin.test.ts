@@ -6,9 +6,10 @@ import {
 } from "../scripts/site-origin.mjs";
 
 describe("public SEO origin is deliberately pinned", () => {
-  it("retains the working GitHub Pages canonical by default", () => {
-    expect(siteOrigin({})).toBe(GITHUB_PAGES_URL);
-    expect(siteOrigin({ FILLTHISPDF_SITE_URL: "" })).toBe(GITHUB_PAGES_URL);
+  it("defaults to the verified custom domain and supports GitHub Pages fallback", () => {
+    expect(siteOrigin({})).toBe(CUSTOM_DOMAIN_URL);
+    expect(siteOrigin({ FILLTHISPDF_SITE_URL: "" })).toBe(CUSTOM_DOMAIN_URL);
+    expect(siteOrigin({ FILLTHISPDF_SITE_URL: GITHUB_PAGES_URL })).toBe(GITHUB_PAGES_URL);
   });
   it("allows the reserved custom domain only when explicitly selected", () => {
     expect(siteOrigin({ FILLTHISPDF_SITE_URL: CUSTOM_DOMAIN_URL })).toBe(CUSTOM_DOMAIN_URL);

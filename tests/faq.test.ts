@@ -17,7 +17,7 @@ describe("helpful PDF FAQ is factual, accessible and never gates downloads", () 
       expect(html.match(/<summary>/g)).toHaveLength(5);
       expect(html).not.toContain('"@type":"FAQPage"');
       expect(html).toContain('href="' + (lang === "en" ? "./" : "../") + 'sample-form.pdf"');
-      expect(html).toContain('https://vtcbelgium.github.io/fillthispdf-web/');
+      expect(html).toContain('https://fillthispdf.othrys.be/');
       expect(faqText[lang].items.every(([,answer]) => answer.length > 45)).toBe(true);
     });
   }

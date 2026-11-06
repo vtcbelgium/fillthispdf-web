@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 
-const root = "https://vtcbelgium.github.io/fillthispdf-web/";
+const root = "https://fillthispdf.othrys.be/";
 const pages = [
   { locale: "en", path: "index.html", url: root, phrase: "Fill PDF Online Free" },
   { locale: "nl", path: "nl/index.html", url: root+"nl/", phrase: "PDF invullen online gratis" },
@@ -16,15 +16,15 @@ describe("crawlable free PDF site", () => {
       expect(html).toContain(`<link rel="canonical" href="${url}"/>`);
       expect(html).toContain('<meta name="description" content="');
       expect(html).toContain('<meta name="robots" content="index,follow');
-      expect(html).toContain("https://vtcbelgium.github.io/fillthispdf-web/nl/");
-      expect(html).toContain("https://vtcbelgium.github.io/fillthispdf-web/fr/");
+      expect(html).toContain("https://fillthispdf.othrys.be/nl/");
+      expect(html).toContain("https://fillthispdf.othrys.be/fr/");
       expect(html).toContain(locale === "en" ? "No signup, trial, payment card" : locale === "nl" ? "Geen abonnement" : "Pas d'abonnement");
       expect(html).toContain('type="application/ld+json"');
       const json = JSON.parse(html.match(/<script type="application\/ld\+json">(.+?)<\/script>/s)![1]);
       expect(json["@type"]).toBe("WebApplication");
       expect(json.offers.price).toBe("0");
       expect(json.url).toBe(url);
-      expect(html).toContain('href="https://vtcbelgium.github.io/fillthispdf-web/"');
+      expect(html).toContain('href="https://fillthispdf.othrys.be/"');
     });
   }
   it("provides one consistent localized sitemap", () => {
