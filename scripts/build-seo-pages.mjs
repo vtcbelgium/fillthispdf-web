@@ -104,6 +104,14 @@ function page(lang) {
       <nav aria-label="Languages">
         ${allLangs.map((key,i)=>`<a hreflang="${key}" lang="${key}" href="${href(key)}"${key===lang?' aria-current="page"':''}>${e(t.links[i])}</a>`).join(" · ")}
       </nav>
+      <nav aria-label="Sovereign Fleet" style="margin-top:18px;font-size:13px;color:#526173;">
+        <strong>Sovereign Fleet:</strong>
+        <a href="https://freeqr.othrys.be" target="_blank" rel="noopener">FreeQR</a> ·
+        <a href="https://shrinkmyphoto.othrys.be" target="_blank" rel="noopener">ShrinkMyPhoto</a> ·
+        <a href="https://quickpercent.othrys.be" target="_blank" rel="noopener">QuickPercent</a> ·
+        <a href="https://unixtime.othrys.be" target="_blank" rel="noopener">UnixTime</a> ·
+        <a href="https://vintagetoycatalog.com" target="_blank" rel="noopener">Vintage Toy Catalog</a>
+      </nav>
     </div>
   ${lang === "en" ? '</aside>' : '</main>'}
   ${lang === "en" ? '<script type="module" src="./src/main.tsx"></script>' : ""}

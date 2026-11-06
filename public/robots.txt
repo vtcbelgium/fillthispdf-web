@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vtcbelgium.github.io/fillthispdf-web/sitemap.xml
+Sitemap: https://vtcbelgium.github.io/fillthispdf-web/sitemap-forms.xml
