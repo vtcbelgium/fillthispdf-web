@@ -262,8 +262,18 @@ export default function App() {
           }}
         >
           <span className="brand-icon">✓</span>FillThis<span>PDF</span>
+          <span className="brand-badge">SOVEREIGN</span>
         </a>
         <div className="header-right">
+          <a
+            href="https://othrys.be/architecture"
+            target="_blank"
+            rel="noopener"
+            className="fleet-link"
+            title="The Sovereign Fleet"
+          >
+            Fleet ↗
+          </a>
           <span className="privacy-mini">◉ {t.local}</span>
           <select
             aria-label={t.language}
@@ -644,10 +654,77 @@ export default function App() {
         </section>
         {pdf && <p className="privacy-footer">{t.privacyBody}</p>}
       </main>
-      <footer>
-        <strong>{t.footer}</strong>
-        <p>{t.terms}</p>
-        <span>© {new Date().getFullYear()} FillThisPDF</span>
+      <footer className="site-footer">
+        <div className="footer-inner">
+          <div className="footer-brand-bar">
+            <div className="footer-brand-info">
+              <div className="brand">
+                <span className="brand-icon">✓</span>FillThis<span>PDF</span>
+              </div>
+              <p className="footer-tagline">100% in-browser PDF form filler &amp; annotator · Zero cloud uploads.</p>
+            </div>
+            <div className="footer-badges">
+              <div className="footer-badge-item">
+                <span className="green-indicator">●</span>
+                <span>Zero Tracking Cookies</span>
+              </div>
+              <div className="footer-badge-item">
+                <span className="green-indicator">●</span>
+                <span>100% In-Browser Execution</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="footer-sitemap-grid">
+            <div className="sitemap-col">
+              <h4>PDF Utilities</h4>
+              <ul>
+                <li><a href="./">Interactive Form Filler</a></li>
+                <li><a href="./sample-form.pdf" download="FillThisPDF-Sample-Form.pdf">Download Sample Form</a></li>
+                <li><a href="#editor">Type Text &amp; Dates</a></li>
+                <li><a href="#editor">Place Checkmarks</a></li>
+                <li><a href="#editor">Add Typed Signature</a></li>
+              </ul>
+            </div>
+
+            <div className="sitemap-col">
+              <h4>Technical Specs</h4>
+              <ul>
+                <li><a href="./">Standard PDF 1.7 Spec</a></li>
+                <li><a href="./">AcroForm Field Engine</a></li>
+                <li><a href="./">Client-Side PDF-Lib</a></li>
+                <li><a href="./">Zero Server Roundtrip</a></li>
+              </ul>
+            </div>
+
+            <div className="sitemap-col">
+              <h4>Sovereign Principles</h4>
+              <ul>
+                <li><a href="https://othrys.be/architecture" target="_blank" rel="noopener">Sovereign Architecture ↗</a></li>
+                <li><a href="https://othrys.be" target="_blank" rel="noopener">OTHRYS Core ↗</a></li>
+                <li><a href="#root">100% Client-Side Engine</a></li>
+                <li><a href="#root">Zero Tracking Cookies</a></li>
+              </ul>
+            </div>
+
+            <div className="sitemap-col">
+              <h4>The Sovereign Fleet</h4>
+              <ul>
+                <li><a href="https://freeqr.othrys.be" target="_blank" rel="noopener">FreeQR ↗</a></li>
+                <li><a href="https://shrinkmyphoto.othrys.be" target="_blank" rel="noopener">ShrinkMyPhoto ↗</a></li>
+                <li><a href="https://quickpercent.othrys.be" target="_blank" rel="noopener">QuickPercent ↗</a></li>
+                <li><a href="https://unixtime.othrys.be" target="_blank" rel="noopener">UnixTime ↗</a></li>
+                <li><a href="https://worldtime.othrys.be" target="_blank" rel="noopener">WorldTime ↗</a></li>
+                <li><a href="https://github.com/vtcbelgium/fillthispdf-web" target="_blank" rel="noopener">GitHub Repository ↗</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="footer-bottom">
+            <span>© {new Date().getFullYear()} FillThisPDF · Engineered under Sovereign Open Architecture in Belgium.</span>
+            <span>100% In-Browser · Zero Tracking Cookies · Zero Cloud Storage</span>
+          </div>
+        </div>
       </footer>
     </>
   );
