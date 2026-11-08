@@ -679,6 +679,7 @@ export default function App() {
               <h4>PDF Utilities</h4>
               <ul>
                 <li><a href="./">Interactive Form Filler</a></li>
+                <li><a href="./forms/">Common PDF Forms</a></li>
                 <li><a href="./sample-form.pdf" download="FillThisPDF-Sample-Form.pdf">Download Sample Form</a></li>
                 <li><a href="#editor">Type Text &amp; Dates</a></li>
                 <li><a href="#editor">Place Checkmarks</a></li>
