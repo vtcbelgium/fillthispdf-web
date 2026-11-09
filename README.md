@@ -1,3 +1,24 @@
+# FillThisPDF
+
+[![Live Site](https://img.shields.io/badge/Live_Tool-fillthispdf.othrys.be-0284c7?style=flat-square)](https://fillthispdf.othrys.be)
+[![Privacy](https://img.shields.io/badge/Privacy-100%25_Client--Side-16a34a?style=flat-square)](https://fillthispdf.othrys.be)
+[![Cookies](https://img.shields.io/badge/Cookies-0-blue?style=flat-square)](https://fillthispdf.othrys.be)
+[![WCAG AA](https://img.shields.io/badge/Accessibility-WCAG_AA-blueviolet?style=flat-square)](https://fillthispdf.othrys.be)
+[![License: MIT](https://img.shields.io/badge/License-MIT-gray?style=flat-square)](LICENSE)
+
+> Fast, private, client-side client-side WebAssembly PDF form filler and signer. Runs 100% in your browser with zero server uploads, zero cookies, and zero tracking.
+
+## Features
+- **100% Client-Side:** Files and confidential data never leave your device.
+- **Zero Cookies & Zero Trackers:** Closed-valve privacy architecture with 0 third-party telemetry scripts.
+- **Keyboard Spotlight:** Jump to any of the 20 sovereign tools anytime by pressing <kbd>⌘K</kbd> or <kbd>Ctrl+K</kbd>.
+- **PWA Ready:** Works offline on laptops, MacBooks, tablets, and mobile devices.
+
+## Direct Web Access
+Use the live tool instantly without installing anything:
+[https://fillthispdf.othrys.be](https://fillthispdf.othrys.be)
+
+
 # FillThisPDF — Fill PDF Forms Online for Free
 
 **Have a PDF to fill?** Upload it, fill fields or add text and checkmarks, then download your completed PDF. **No account, subscription, trial, watermark or paywall.** Manual PDF editing runs locally in your browser; your document is not uploaded.
