@@ -11,6 +11,7 @@ export default ts.config(
       "test-results/**",
       "public/pdfjs/**",
       "public/fleet-spotlight.js",
+      "public/stats.js",
       "public/sw.js",
       "fleet-spotlight.js",
       "sw.js",
