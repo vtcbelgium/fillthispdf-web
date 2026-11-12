@@ -67,16 +67,17 @@ function page(lang) {
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="theme-color" content="#11695e"/>
+  <meta name="theme-color" content="#090b10"/>
   <meta name="app-root" content="${dir}"/>
   <title>${e(t.title)}</title>
   <meta name="description" content="${e(t.description)}"/>
   <meta name="robots" content="index,follow,max-image-preview:large"/>
+  ${lang === "en" ? '<link rel="search" type="application/opensearchdescription+xml" title="FillThisPDF" href="/opensearch.xml" />' : ""}
   <link rel="canonical" href="${url}"/>
   ${allLangs.map((key) => `<link rel="alternate" hreflang="${key}" href="${href(key)}"/>`).join("\n  ")}
   <link rel="alternate" hreflang="x-default" href="${domain}"/>
   <link rel="icon" type="image/svg+xml" href="${dir}favicon.svg"/>
-  ${lang !== "en" ? `<style>body{margin:0;background:#f7f8f4;color:#182c32;font:16px/1.65 system-ui,sans-serif}.localized-start{max-width:750px;margin:5vh auto;padding:30px 24px}h1{font-size:clamp(28px,5vw,46px);line-height:1.16}h2{margin-top:34px}.start-button{display:inline-block;background:#126c60;color:white;border-radius:8px;font-weight:700;padding:13px 22px;margin:12px 0;text-decoration:none}a{color:#11695e}.seo-help-note{font-size:14px;color:#526173}nav{margin-top:34px}nav a{margin-right:10px}@media(max-width:600px){.localized-start{margin:0 auto;padding:22px}}</style>` : ""}
+  ${lang !== "en" ? `<style>body{margin:0;background:#fafafa;color:#090b10;font:16px/1.65 system-ui,sans-serif}.localized-start{max-width:750px;margin:5vh auto;padding:30px 24px}h1{font-size:clamp(28px,5vw,46px);line-height:1.16;letter-spacing:-0.03em}h2{margin-top:34px}.start-button{display:inline-block;background:#090b10;color:white;border-radius:8px;font-weight:700;padding:13px 22px;margin:12px 0;text-decoration:none}a{color:#090b10}.seo-help-note{font-size:14px;color:#525866}nav{margin-top:34px}nav a{margin-right:10px}@media(max-width:600px){.localized-start{margin:0 auto;padding:22px}}</style>` : '<link rel="manifest" href="/manifest.json">'}
   <meta property="og:type" content="website"/>
   <meta property="og:site_name" content="FillThisPDF"/>
   <meta property="og:locale" content="${lang === "nl" ? "nl_BE" : lang === "fr" ? "fr_BE" : "en_US"}"/>
@@ -85,6 +86,7 @@ function page(lang) {
   <meta property="og:description" content="${e(t.description)}"/>
   <meta name="twitter:card" content="summary"/>
   <script type="application/ld+json">${JSON.stringify(structured).replaceAll("<", "\\u003c")}</script>
+  ${lang === "en" ? '<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does FillThisPDF upload my data to any server?", "acceptedAnswer": {"@type": "Answer", "text": "No. FillThisPDF executes 100% locally in your browser (ISO 32000-2 (PDF 2.0) / Local WebAssembly Canvas). Zero bytes leave your device."}}, {"@type": "Question", "name": "Is FillThisPDF completely free without watermarks or signups?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. FillThisPDF is completely free, sets 0 cookies, and requires no registration."}}]}</script>' : ""}
 </head>
 <body>
   ${lang === "en" ? '<div id="root"></div><aside class="seo-help" aria-label="'+e(t.heading)+'">' : '<main class="localized-start"><p><strong>FillThisPDF</strong> · '+e(lang === "nl" ? "Gratis online PDF invullen" : "Remplir un PDF gratuitement")+'</p>'}
@@ -104,17 +106,17 @@ function page(lang) {
       <nav aria-label="Languages">
         ${allLangs.map((key,i)=>`<a hreflang="${key}" lang="${key}" href="${href(key)}"${key===lang?' aria-current="page"':''}>${e(t.links[i])}</a>`).join(" · ")}
       </nav>
-      <nav aria-label="Sovereign Fleet" style="margin-top:18px;font-size:13px;color:#526173;">
+      <nav aria-label="Sovereign Fleet" style="margin-top:18px;font-size:13px;color:#525866;">
         <strong>Sovereign Fleet:</strong>
         <a href="https://freeqr.othrys.be" target="_blank" rel="noopener">FreeQR</a> ·
         <a href="https://shrinkmyphoto.othrys.be" target="_blank" rel="noopener">ShrinkMyPhoto</a> ·
         <a href="https://quickpercent.othrys.be" target="_blank" rel="noopener">QuickPercent</a> ·
         <a href="https://unixtime.othrys.be" target="_blank" rel="noopener">UnixTime</a> ·
-        <a href="https://vintagetoycatalog.com" target="_blank" rel="noopener">Vintage Toy Catalog</a>
+        <a href="https://othrys.be/" target="_blank" rel="noopener">OTHRYS Hub</a>
       </nav>
     </div>
   ${lang === "en" ? '</aside>' : '</main>'}
-  ${lang === "en" ? '<script type="module" src="./src/main.tsx"></script>' : ""}
+  ${lang === "en" ? '<script type="module" src="./src/main.tsx"></script>\n  <script src="/fleet-spotlight.js" defer></script>\n  <script>if("serviceWorker"in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>' : ""}
 </body>
 </html>`.replace(/^[ \t]+$/gm, "");
 }
