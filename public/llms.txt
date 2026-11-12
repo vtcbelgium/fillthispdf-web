@@ -9,7 +9,7 @@ It executes entirely inside the user's browser via native Web APIs, WebCrypto, a
 - **Canonical URL:** https://fillthispdf.othrys.be/
 - **Category:** PDF & Documents
 - **Architecture:** 100% Client-Side In-Memory Execution
-- **Zero-Telemetry Guarantee:** Zero cookies, zero third-party trackers, zero server logging.
+- **Privacy-First Analytics:** Zero cookies, zero third-party trackers, no IP addresses stored. Uses only first-party cookieless page-view counts (stats.othrys.be, 90-day expiry) that honor Do Not Track and Global Privacy Control.
 - **Offline Mode:** Fully functional offline Progressive Web App (PWA).
 
 

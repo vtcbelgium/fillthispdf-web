@@ -11,7 +11,7 @@ export const en = {
   local: "Your documents stay on your device.",
   privacy: "Private by design",
   privacyBody:
-    "Files and edits stay in this tab’s memory. Nothing is uploaded or saved on a server. Closing or refreshing this page clears your work. There are no analytics or external AI requests.",
+    "Files and edits stay in this tab’s memory. Nothing is uploaded or saved on a server. Closing or refreshing this page clears your work. Only anonymous, cookieless page-view counts (respecting Do Not Track / GPC, expired after 90 days) are collected; no external AI requests occur.",
   free: "Free, start to finish",
   freeBody: "No account. No watermark. No payment to download.",
   flat: "Works with ordinary PDFs",
@@ -105,7 +105,7 @@ const nl: Messages = {
   local: "Je documenten blijven op je apparaat.",
   privacy: "Privacy voorop",
   privacyBody:
-    "Bestanden en wijzigingen blijven in het geheugen van dit tabblad. Niets wordt geüpload of op een server opgeslagen. Sluiten of vernieuwen wist je werk. Geen analyses of externe AI-verzoeken.",
+    "Bestanden en wijzigingen blijven in het geheugen van dit tabblad. Niets wordt geüpload of op een server opgeslagen. Sluiten of vernieuwen wist je werk. Alleen anonieme paginaweergavetellingen zonder cookies of IP-opslag (met respect voor Do Not Track / GPC, na 90 dagen gewist); geen externe AI-verzoeken.",
   free: "Gratis van begin tot eind",
   freeBody: "Geen account. Geen watermerk. Geen betaling om te downloaden.",
   flat: "Ook voor gewone PDF’s",
@@ -201,7 +201,7 @@ const fr: Messages = {
   local: "Vos documents restent sur votre appareil.",
   privacy: "La confidentialité avant tout",
   privacyBody:
-    "Les fichiers et modifications restent dans la mémoire de cet onglet. Rien n’est envoyé ni enregistré sur un serveur. Fermer ou actualiser la page efface votre travail. Aucune analyse ni requête IA externe.",
+    "Les fichiers et modifications restent dans la mémoire de cet onglet. Rien n’est envoyé ni enregistré sur un serveur. Fermer ou actualiser la page efface votre travail. Seul un comptage anonyme des pages vues sans cookies ni IP (respectant Do Not Track / GPC, supprimé après 90 jours) est effectué ; aucune requête IA externe.",
   free: "Gratuit du début à la fin",
   freeBody: "Sans compte. Sans filigrane. Sans paiement pour télécharger.",
   flat: "Pour les PDF ordinaires aussi",

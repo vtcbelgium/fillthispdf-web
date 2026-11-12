@@ -5,7 +5,7 @@
 [![Cookies](https://img.shields.io/badge/Cookies-0-blue?style=flat-square)](https://fillthispdf.othrys.be)
 [![WCAG AA](https://img.shields.io/badge/Accessibility-WCAG_AA-blueviolet?style=flat-square)](https://fillthispdf.othrys.be)
 
-> Fast, private, client-side client-side WebAssembly PDF form filler and signer. Runs 100% in your browser with zero server uploads, zero cookies, and zero tracking.
+> Fast, private, client-side WebAssembly PDF form filler and signer. Runs 100% in your browser with zero server uploads, zero cookies, and zero third-party tracking.
 
 ## Features
 - **100% Client-Side:** Files and confidential data never leave your device.
@@ -37,7 +37,7 @@ npm ci
 npm run dev
 ```
 
-No environment variables, provider keys, account, database or backend are required. The app does not upload documents, store them persistently, or send analytics. All edits are held in tab memory. Closing or refreshing discards them; download first.
+No environment variables, provider keys, account, database or backend are required. The app does not upload documents or store them persistently; only anonymous, cookieless page-view counts (stats.othrys.be, respecting DNT/GPC, 90-day expiry) are collected. All edits are held in tab memory. Closing or refreshing discards them; download first.
 
 ## Features
 

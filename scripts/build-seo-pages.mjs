@@ -116,7 +116,7 @@ function page(lang) {
       </nav>
     </div>
   ${lang === "en" ? '</aside>' : '</main>'}
-  ${lang === "en" ? '<script type="module" src="./src/main.tsx"></script>\n  <script src="/fleet-spotlight.js" defer></script>\n  <script>if("serviceWorker"in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>' : ""}
+  ${lang === "en" ? '<script type="module" src="./src/main.tsx"></script>\n  <script src="/fleet-spotlight.js" defer></script>\n  <script>if("serviceWorker"in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}</script>\n' : ""}  <script src="/stats.js" defer></script>
 </body>
 </html>`.replace(/^[ \t]+$/gm, "");
 }
