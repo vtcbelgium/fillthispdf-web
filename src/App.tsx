@@ -265,13 +265,11 @@ export default function App() {
         </a>
         <div className="header-right">
           <a
-            href="https://othrys.be/architecture"
-            target="_blank"
-            rel="noopener"
+            href="https://othrys.be/portfolio?browse=1&category=Tools"
             className="fleet-link"
-            title="The Sovereign Fleet"
+            title="Back to OTHRYS portfolio"
           >
-            Fleet ↗
+            ← Portfolio
           </a>
           <span className="privacy-mini">◉ {t.local}</span>
           <select
