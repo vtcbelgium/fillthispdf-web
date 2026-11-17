@@ -809,8 +809,12 @@ aside p {
   }
 }
 
-/* Crawlable help appears beneath the PDF tool and is never a pop-up or gate. */
+/* Crawlable help is a normal document section, not the editor's scrollable sidebar. */
 .seo-help {
+  max-height: none;
+  overflow: visible;
+  align-self: stretch;
+  border-radius: 0;
   border-top: 1px solid #e4e4e7;
   background: #f4f4f5;
   padding: 30px 20px 44px;

@@ -32,7 +32,12 @@ describe("crawlable free PDF site", () => {
     for (const {url} of pages) {
       expect(xml).toContain(`<loc>${url}</loc>`);
     }
-    expect(xml.match(/<url>/g)).toHaveLength(3);
+    expect(xml).toContain("<loc>https://fillthispdf.othrys.be/forms/</loc>");
+    const hub = readFileSync("public/forms/index.html", "utf8");
+    const formUrls = [...hub.matchAll(/href="(https:\/\/fillthispdf\.othrys\.be\/forms\/[a-z0-9-]+\/)"/g)].map((m) => m[1]);
+    expect(formUrls).toHaveLength(30);
+    for (const formUrl of formUrls) expect(xml).toContain(`<loc>${formUrl}</loc>`);
+    expect(xml.match(/<url>/g)).toHaveLength(34);
   });
   it("keeps the actual editor on the English root and directs localized readers to it", () => {
     const main = readFileSync("index.html", "utf8");

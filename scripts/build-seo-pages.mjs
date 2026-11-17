@@ -1,4 +1,4 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readdir, writeFile } from "node:fs/promises";
 import { resolve, dirname } from "node:path";
 import { siteOrigin } from "./site-origin.mjs";
 import { faqText } from "./seo-faq.mjs";
@@ -15,6 +15,8 @@ const locales = {
     why: "What can I do with FillThisPDF?",
     detail: "Fill interactive PDF forms, or write on regular and scanned PDFs by placing text on the page. Add checkmarks or a simple typed signature, undo edits, and download the finished file. It does not erase existing content, edit scanned text, or create certified digital signatures.",
     note: "For personal documents, remember to download your finished file before closing the tab. Nothing is uploaded for manual editing.",
+    privacy: "PDF editing stays in your browser. This site sends cookieless page paths (no URL fragments) to OTHRYS statistics; PDF content is not sent.",
+    privacyLink: "Privacy information",
     links: ["English","Nederlands","Français"],
   },
   nl: {
@@ -27,6 +29,8 @@ const locales = {
     why: "Wat kun je doen met FillThisPDF?",
     detail: "Vul invulbare PDF-formulieren in of zet tekst op gewone en gescande PDF's. Voeg vinkjes of een eenvoudige getypte handtekening toe, maak wijzigingen ongedaan en sla de ingevulde PDF op. De tool wist geen bestaande inhoud en maakt geen gekwalificeerde digitale handtekeningen.",
     note: "Download je ingevulde bestand voordat je dit tabblad sluit. Bij handmatig bewerken wordt je PDF niet geüpload.",
+    privacy: "Je PDF wordt lokaal in de browser bewerkt. De site telt bezoeken zonder cookies via het paginapad (zonder URL-fragment); de PDF-inhoud wordt niet verzonden.",
+    privacyLink: "Privacy-informatie",
     links: ["English","Nederlands","Français"],
   },
   fr: {
@@ -39,6 +43,8 @@ const locales = {
     why: "Que permet FillThisPDF ?",
     detail: "Remplissez les formulaires PDF interactifs ou placez du texte sur des PDF ordinaires ou numérisés. Ajoutez des coches ou une signature simplement saisie, annulez les modifications et téléchargez le fichier. L'outil n'efface pas le contenu d'origine et ne crée pas de signature numérique certifiée.",
     note: "Téléchargez votre document avant de fermer cet onglet. Aucun PDF n'est envoyé à un serveur pour l'édition manuelle.",
+    privacy: "La modification de votre PDF reste dans le navigateur. Le site compte les visites sans cookies en transmettant le chemin de page (sans fragment d’URL), jamais le PDF.",
+    privacyLink: "Informations de confidentialité",
     links: ["English","Nederlands","Français"],
   },
 };
@@ -86,7 +92,7 @@ function page(lang) {
   <meta property="og:description" content="${e(t.description)}"/>
   <meta name="twitter:card" content="summary"/>
   <script type="application/ld+json">${JSON.stringify(structured).replaceAll("<", "\\u003c")}</script>
-  ${lang === "en" ? '<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does FillThisPDF upload my data to any server?", "acceptedAnswer": {"@type": "Answer", "text": "No. FillThisPDF executes 100% locally in your browser (ISO 32000-2 (PDF 2.0) / Local WebAssembly Canvas). Zero bytes leave your device."}}, {"@type": "Question", "name": "Is FillThisPDF completely free without watermarks or signups?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. FillThisPDF is completely free, sets 0 cookies, and requires no registration."}}]}</script>' : ""}
+  ${lang === "en" ? '<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does FillThisPDF upload my PDF to a server for editing?", "acceptedAnswer": {"@type": "Answer", "text": "No. PDF files are edited locally in the browser. This website separately records cookieless page views; see the privacy notice."}}, {"@type": "Question", "name": "Is FillThisPDF completely free without watermarks or signups?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. FillThisPDF is completely free, uses cookieless visit statistics, and requires no registration."}}]}</script>' : ""}
 </head>
 <body>
   ${lang === "en" ? '<div id="root"></div><aside class="seo-help" aria-label="'+e(t.heading)+'">' : '<main class="localized-start"><p><strong>FillThisPDF</strong> · '+e(lang === "nl" ? "Gratis online PDF invullen" : "Remplir un PDF gratuitement")+'</p>'}
@@ -98,6 +104,7 @@ function page(lang) {
       <h3>${e(t.why)}</h3>
       <p>${e(t.detail)}</p>
       <p class="seo-help-note">${e(t.note)}</p>
+      <p class="seo-help-note">${e(t.privacy)} <a href="https://othrys.be/legal/privacy">${e(t.privacyLink)}</a>.</p>
       <p><a href="${dir}sample-form.pdf" download="FillThisPDF-Sample-Form.pdf">${lang === "nl" ? "Download een voorbeeld-PDF" : lang === "fr" ? "T&eacute;l&eacute;charger un PDF d'exemple" : "Download a free sample PDF to try"}</a></p>
       <section class="pdf-faq" aria-label="${e(faqText[lang].heading)}">
         <h3>${e(faqText[lang].heading)}</h3>
@@ -125,9 +132,16 @@ for (const key of allLangs) {
   await mkdir(dirname(path),{recursive:true});
   await writeFile(path, page(key), "utf8");
 }
+// Keep sitemap entries aligned with the actual public forms catalog on every build.
+const formSlugs = (await readdir(resolve("public/forms"), { withFileTypes: true }))
+  .filter((entry) => entry.isDirectory() && /^[a-z0-9-]+$/.test(entry.name))
+  .map((entry) => entry.name)
+  .sort();
+const allFormUrls = [`${domain}forms/`, ...formSlugs.map((slug) => `${domain}forms/${slug}/`)];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${allLangs.map((key) => `  <url><loc>${href(key)}</loc>${allLangs.map(alt=>`<xhtml:link rel="alternate" hreflang="${alt}" href="${href(alt)}"/>`).join("")}<xhtml:link rel="alternate" hreflang="x-default" href="${domain}"/></url>`).join("\n")}
+${allFormUrls.map((url) => `  <url><loc>${url}</loc></url>`).join("\n")}
 </urlset>
 `;
 await writeFile(resolve("public/sitemap.xml"), sitemap, "utf8");
