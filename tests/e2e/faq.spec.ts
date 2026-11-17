@@ -11,6 +11,13 @@ for(const locale of pages) {
     await page.goto(locale.path);
     const section=page.getByRole("region",{name:locale.heading});
     await expect(section).toBeVisible();
+    // Regression: the SEO <aside> must not inherit the editor sidebar's
+    // max-height/overflow rules, which intercepted mobile clicks.
+    if (locale.path === "/") {
+      const help = page.locator("aside.seo-help");
+      await expect(help).toHaveCSS("max-height", "none");
+      await expect(help).toHaveCSS("overflow-y", "visible");
+    }
     const entries=section.locator("details");
     await expect(entries).toHaveCount(5);
     const first=entries.first();
