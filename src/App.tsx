@@ -658,16 +658,16 @@ export default function App() {
               <div className="brand">
                 <span className="brand-icon">✓</span>FillThis<span>PDF</span>
               </div>
-              <p className="footer-tagline">100% in-browser PDF form filler &amp; annotator · Zero cloud uploads.</p>
+              <p className="footer-tagline">Browser-based PDF form filler &amp; annotator · PDF files stay local for editing.</p>
             </div>
             <div className="footer-badges">
               <div className="footer-badge-item">
                 <span className="green-indicator">●</span>
-                <span>Zero Tracking Cookies</span>
+                <span>No Analytics Cookies</span>
               </div>
               <div className="footer-badge-item">
                 <span className="green-indicator">●</span>
-                <span>100% In-Browser Execution</span>
+                <span>PDF Editing Runs in Browser</span>
               </div>
             </div>
           </div>
@@ -691,7 +691,7 @@ export default function App() {
                 <li><a href="./">Standard PDF 1.7 Spec</a></li>
                 <li><a href="./">AcroForm Field Engine</a></li>
                 <li><a href="./">Client-Side PDF-Lib</a></li>
-                <li><a href="./">Zero Server Roundtrip</a></li>
+                <li><a href="./">Local PDF Editing</a></li>
               </ul>
             </div>
 
@@ -700,8 +700,8 @@ export default function App() {
               <ul>
                 <li><a href="https://othrys.be/architecture" target="_blank" rel="noopener">Sovereign Architecture ↗</a></li>
                 <li><a href="https://othrys.be" target="_blank" rel="noopener">OTHRYS Core ↗</a></li>
-                <li><a href="#root">100% Client-Side Engine</a></li>
-                <li><a href="#root">Zero Tracking Cookies</a></li>
+                <li><a href="#root">Browser-Based PDF Editor</a></li>
+                <li><a href="#root">No Analytics Cookies</a></li>
               </ul>
             </div>
 
@@ -720,7 +720,7 @@ export default function App() {
 
           <div className="footer-bottom">
             <span>© {new Date().getFullYear()} FillThisPDF · Engineered under Sovereign Open Architecture in Belgium.</span>
-            <span>100% In-Browser · Zero Tracking Cookies · Zero Cloud Storage</span>
+            <span>Local PDF Editing · Cookieless Site Statistics</span>
           </div>
         </div>
       </footer>
