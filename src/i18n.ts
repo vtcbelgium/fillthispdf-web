@@ -11,7 +11,7 @@ export const en = {
   local: "Your documents stay on your device.",
   privacy: "Private by design",
   privacyBody:
-    "Your PDF is edited in the browser, not uploaded for editing. Refreshing or closing the page clears the current editing session. This site separately sends cookieless page views to OTHRYS statistics, where a daily pseudonymous visitor hash is stored. Its deletion schedule is configured for 90 days; live retention still needs verification.",
+    "Your PDF is edited in the browser, not uploaded for editing. Refreshing or closing the page clears the current editing session. Only after your explicit acceptance, this site sends cookieless page views to OTHRYS statistics, where a daily pseudonymous visitor hash is stored. Its deletion schedule is configured for 90 days; live retention still needs verification.",
   free: "Free, start to finish",
   freeBody: "No account. No watermark. No payment to download.",
   flat: "Works with ordinary PDFs",
@@ -105,7 +105,7 @@ const nl: Messages = {
   local: "Je documenten blijven op je apparaat.",
   privacy: "Privacy voorop",
   privacyBody:
-    "Je PDF wordt in de browser bewerkt en niet naar een server geüpload om te bewerken. Sluiten of vernieuwen beëindigt de huidige bewerksessie. De site verstuurt afzonderlijk paginabezoeken zonder cookies naar OTHRYS-statistieken, met een dagelijks pseudoniem bezoekerskenmerk. Verwijdering na 90 dagen is geconfigureerd, maar nog niet live geverifieerd.",
+    "Je PDF wordt in de browser bewerkt en niet naar een server geüpload om te bewerken. Sluiten of vernieuwen beëindigt de huidige bewerksessie. Alleen na je uitdrukkelijke toestemming verstuurt de site paginabezoeken zonder cookies naar OTHRYS-statistieken, met een dagelijks pseudoniem bezoekerskenmerk. Verwijdering na 90 dagen is geconfigureerd, maar nog niet live geverifieerd.",
   free: "Gratis van begin tot eind",
   freeBody: "Geen account. Geen watermerk. Geen betaling om te downloaden.",
   flat: "Ook voor gewone PDF’s",
@@ -201,7 +201,7 @@ const fr: Messages = {
   local: "Vos documents restent sur votre appareil.",
   privacy: "La confidentialité avant tout",
   privacyBody:
-    "Votre PDF est modifié dans le navigateur, sans téléversement pour l'édition. Fermer ou actualiser la page termine la session d'édition. Le site transmet séparément des visites sans cookies aux statistiques OTHRYS, avec un identifiant pseudonyme quotidien. Une suppression après 90 jours est configurée, mais non encore vérifiée en production.",
+    "Votre PDF est modifié dans le navigateur, sans téléversement pour l'édition. Fermer ou actualiser la page termine la session d'édition. Uniquement après votre accord explicite, le site transmet des visites sans cookies aux statistiques OTHRYS, avec un identifiant pseudonyme quotidien. Une suppression après 90 jours est configurée, mais non encore vérifiée en production.",
   free: "Gratuit du début à la fin",
   freeBody: "Sans compte. Sans filigrane. Sans paiement pour télécharger.",
   flat: "Pour les PDF ordinaires aussi",
