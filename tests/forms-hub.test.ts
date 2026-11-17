@@ -11,7 +11,7 @@ describe("Forms Hub Page", () => {
     expect(html).toContain('<link rel="canonical" href="https://fillthispdf.othrys.be/forms/"/>');
     expect(html).toContain('"@type": "CollectionPage"');
     expect(html).toContain('"@type": "BreadcrumbList"');
-    const jsonText = html.match(/<script type="application\\/ld\\+json">([\\s\\S]*?)<\\/script>/)?.[1];
+    const jsonText = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1];
     expect(jsonText).toBeTruthy();
     const data = JSON.parse(jsonText!);
     expect(data["@type"]).toBe("CollectionPage");
