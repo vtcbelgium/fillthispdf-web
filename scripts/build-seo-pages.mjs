@@ -90,7 +90,9 @@ function page(lang) {
   <meta property="og:url" content="${url}"/>
   <meta property="og:title" content="${e(t.title)}"/>
   <meta property="og:description" content="${e(t.description)}"/>
-  <meta name="twitter:card" content="summary"/>
+  <meta property="og:image" content="${domain}og-image.svg"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="${domain}og-image.svg"/>
   <script type="application/ld+json">${JSON.stringify(structured).replaceAll("<", "\\u003c")}</script>
   ${lang === "en" ? '<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does FillThisPDF upload my PDF to a server for editing?", "acceptedAnswer": {"@type": "Answer", "text": "No. PDF files are edited locally in the browser. This website separately records cookieless page views; see the privacy notice."}}, {"@type": "Question", "name": "Is FillThisPDF completely free without watermarks or signups?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. FillThisPDF is completely free, offers optional cookieless visit statistics only after consent, and requires no registration."}}]}</script>' : ""}
 </head>
