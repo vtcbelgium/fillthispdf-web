@@ -1,0 +1,7 @@
+Name: FillThisPDF
+URL: https://fillthispdf.othrys.be/
+Description: Private in-browser PDF form filler and signature tool running 100% locally with zero server uploads.
+LLMs-Txt: https://fillthispdf.othrys.be/llms.txt
+Sitemap: https://fillthispdf.othrys.be/sitemap.xml
+Protocol: public-read-only
+Privacy: zero-tracking-cookies, local-browser-execution, zero-cloud-uploads
